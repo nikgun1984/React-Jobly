@@ -1,0 +1,67 @@
+import UserLoginForm from "./UserLoginForm";
+import UserRegisterForm from "./UserRegisterForm";
+import { makeStyles } from "@material-ui/core/styles";
+import MainPage from "./MainPage";
+import CompanyList from "./CompanyList";
+import { Route, Switch } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+	space: {
+		marginTop: "4rem",
+	},
+	center: {
+		marginTop: "30vh",
+		marginBottom: "4rem",
+		color: "#0000FF",
+	},
+}));
+
+const Routes = () => {
+	const classes = useStyles();
+	return (
+		<>
+			<Switch>
+				<Route exact path="/login">
+					<h1 className={classes.space}>Login</h1>
+					<UserLoginForm />
+				</Route>
+				<Route exact path="/register">
+					<h1 className={classes.space}>Sign Up</h1>
+					<UserRegisterForm />
+				</Route>
+				<Route exact path="/profile">
+					<h1 className={classes.space}>User Profile</h1>
+				</Route>
+				<Route exact path="/companies/:company">
+					<h1 className={classes.space}>Company Blah Blah</h1>
+				</Route>
+				<Route exact path="/companies">
+					<h1 className={classes.space}>Companies</h1>
+					<CompanyList />
+				</Route>
+				<Route exact path="/jobs/:job">
+					<h1 className={classes.space}>Job Blah Blah</h1>
+				</Route>
+				<Route exact path="/jobs">
+					<h1 className={classes.space}>Jobs</h1>
+				</Route>
+				<Route exact path="/">
+					<h1 className={classes.center}>Welcome to Jobly Home Page</h1>
+					<h4>Keep Searching and You Find it</h4>
+					<MainPage />
+				</Route>
+			</Switch>
+		</>
+	);
+};
+
+export default Routes;
+
+/*
+
+/companies
+List all companies
+/companies/apple
+View details of this company
+
+*/
