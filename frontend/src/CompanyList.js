@@ -1,4 +1,3 @@
-import axios from "axios";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -7,29 +6,64 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import Company from "./Company";
+import axios from "axios";
 
 const CompanyList = () => {
+	const INITIAL_STATE = {
+		name: "",
+		minEmployees: "",
+		maxEmployees: "",
+	};
 	const [companies, setCompanies] = useState([]);
+	const [formData, setFormData] = useState(INITIAL_STATE);
+
+	const handleChange = (evt) => {
+		const { name, value } = evt.target;
+		setFormData((fData) => ({
+			...fData,
+			[name]: value,
+		}));
+	};
+
+	async function fetchData() {
+		const paramData = {};
+		for (let el of Object.keys(formData)) {
+			if (formData[el]) {
+				paramData[el] = formData[el];
+			}
+		}
+		const data = await axios.get("http://127.0.0.1:3001/companies", {
+			params: {
+				...paramData,
+			},
+		});
+		setCompanies(data.data.companies);
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		fetchData();
+		setFormData(INITIAL_STATE);
+	};
 
 	useEffect(() => {
-		async function getData() {
-			const res = await axios.get(`http://localhost:3001/companies`);
-			setCompanies((companies) => [...res.data.companies]);
-			console.log(companies);
-		}
-		getData();
+		fetchData();
 	}, []);
+
 	return (
 		<div>
 			<Container>
 				<Jumbotron>
-					<Form>
+					<Form onSubmit={handleSubmit}>
 						<Form.Row className="align-items-center">
 							<Col>
 								<Form.Control
 									className="mb-2"
 									type="text"
+									name="name"
 									placeholder="Search by Company Name"
+									onChange={handleChange}
+									value={formData.name}
 								/>
 							</Col>
 							<Col xs="auto">
@@ -37,7 +71,10 @@ const CompanyList = () => {
 									className="mb-2"
 									type="number"
 									id="minEmployees"
+									name="minEmployees"
 									placeholder="Min Employees"
+									onChange={handleChange}
+									value={formData.minEmployees}
 								/>
 							</Col>
 							<Col xs="auto">
@@ -45,7 +82,10 @@ const CompanyList = () => {
 									className="mb-2"
 									type="number"
 									id="maxEmployees"
+									name="maxEmployees"
 									placeholder="Max Employees"
+									onChange={handleChange}
+									value={formData.maxEmployees}
 								/>
 							</Col>
 							<Col>
@@ -57,9 +97,8 @@ const CompanyList = () => {
 					</Form>
 					<Row className="justify-content center text-center">
 						{companies.map((company) => (
-							<Col className="m-3">
+							<Col className="m-3" key={company.handle}>
 								<Company
-									key={company.handle}
 									id={company.handle}
 									name={company.name}
 									description={company.description}
