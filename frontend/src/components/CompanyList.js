@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import Company from "./Company";
-import axios from "axios";
+import JoblyApi from "../api";
 
 const CompanyList = () => {
 	const INITIAL_STATE = {
@@ -26,18 +26,8 @@ const CompanyList = () => {
 	};
 
 	async function fetchData() {
-		const paramData = {};
-		for (let el of Object.keys(formData)) {
-			if (formData[el]) {
-				paramData[el] = formData[el];
-			}
-		}
-		const data = await axios.get("http://127.0.0.1:3001/companies", {
-			params: {
-				...paramData,
-			},
-		});
-		setCompanies(data.data.companies);
+		const companies = await JoblyApi.getCompanies(formData);
+		setCompanies(companies);
 	}
 
 	const handleSubmit = async (e) => {

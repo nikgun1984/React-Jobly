@@ -1,8 +1,9 @@
-import UserLoginForm from "./UserLoginForm";
-import UserRegisterForm from "./UserRegisterForm";
+import UserLoginForm from "./components/UserLoginForm";
+import UserRegisterForm from "./components/UserRegisterForm";
 import { makeStyles } from "@material-ui/core/styles";
-import MainPage from "./MainPage";
-import CompanyList from "./CompanyList";
+import MainPage from "./components/MainPage";
+import CompanyList from "./components/CompanyList";
+import JobList from "./components/JobList";
 import { Route, Switch } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,7 @@ const Routes = () => {
 				</Route>
 				<Route exact path="/jobs">
 					<h1 className={classes.space}>Jobs</h1>
+					<JobList />
 				</Route>
 				<Route exact path="/">
 					<h1 className={classes.center}>Welcome to Jobly Home Page</h1>
