@@ -10,7 +10,13 @@ const Job = (props) => {
 						Salary: {props.salary}
 					</Card.Subtitle>
 					<Card.Text>{props.companyName}</Card.Text>
-					{props.equity ? <Card.Text>{props.equity}</Card.Text> : ""}
+					{props.equity ? (
+						<Card.Text>
+							<b>Equity:</b> {props.equity}
+						</Card.Text>
+					) : (
+						""
+					)}
 				</Card.Body>
 			</Card>
 		</>
