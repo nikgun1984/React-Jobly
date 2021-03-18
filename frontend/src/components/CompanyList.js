@@ -26,7 +26,7 @@ const CompanyList = () => {
 	};
 
 	async function fetchData() {
-		const companies = await JoblyApi.getCompanies(formData);
+		const companies = await JoblyApi.getComponents(formData, "companies");
 		setCompanies(companies);
 	}
 

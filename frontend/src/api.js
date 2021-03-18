@@ -39,26 +39,17 @@ class JoblyApi {
 		return res.companies;
 	}
 
-	static async getCompanies(formData) {
-		const paramData = {};
-		for (let el of Object.keys(formData)) {
-			if (formData[el]) {
-				paramData[el] = formData[el];
-			}
-		}
-		let res = await this.request(`companies`, paramData);
-		return res.companies;
-	}
+	/* Get Details of Companies or Jobs( with filters or without )*/
 
-	static async getJobs(formData) {
+	static async getComponents(formData, url) {
 		const paramData = {};
 		for (let el of Object.keys(formData)) {
 			if (formData[el]) {
 				paramData[el] = formData[el];
 			}
 		}
-		let res = await this.request(`jobs`, paramData);
-		return res.jobs;
+		let res = await this.request(url, paramData);
+		return res[url];
 	}
 }
 

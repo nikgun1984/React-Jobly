@@ -34,7 +34,7 @@ const JobList = () => {
 	};
 
 	async function fetchData() {
-		const jobs = await JoblyApi.getJobs(formData);
+		const jobs = await JoblyApi.getComponents(formData, "jobs");
 		setJobs(jobs);
 	}
 
