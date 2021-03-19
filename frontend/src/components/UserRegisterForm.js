@@ -19,7 +19,14 @@ const UserRegisterForm = () => {
 		email: "",
 	};
 	const history = useHistory();
-	const { token, setToken } = useContext(UserContext);
+	const {
+		token,
+		setToken,
+		currUser,
+		setCurrUser,
+		currUserInfo,
+		setCurrUserInfo,
+	} = useContext(UserContext);
 	const [formData, setFormData] = useState(INITIAL_STATE);
 
 	const handleChange = (evt) => {
@@ -34,6 +41,12 @@ const UserRegisterForm = () => {
 		const data = await JoblyApi.getAuthorization(formData, "register");
 		if (data.token) {
 			setToken(data.token);
+			setCurrUser(formData.username);
+			setCurrUserInfo((prevState) => ({
+				user: {
+					...formData,
+				},
+			}));
 			setFormData(INITIAL_STATE);
 			history.push("/");
 		}

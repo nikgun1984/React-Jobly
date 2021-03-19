@@ -64,6 +64,12 @@ class JoblyApi {
 
 	static async getAuthorization(formData, url) {
 		let res = await this.request(`auth/${url}`, formData, "post");
+		JoblyApi.token = res.token;
+		return res.token;
+	}
+
+	static async getUserInfo(username) {
+		let res = await this.request(`users/${username}`);
 		return res;
 	}
 }

@@ -5,7 +5,7 @@ import MainPage from "./components/MainPage";
 import CompanyList from "./components/CompanyList";
 import JobList from "./components/JobList";
 import UserPage from "./components/UserPage";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import UserContext from "./UserContext";
 import { useContext } from "react";
 
@@ -43,19 +43,19 @@ const Routes = () => {
 				</Route>
 				<Route exact path="/companies">
 					<h1 className={classes.space}>Companies</h1>
-					<CompanyList />
+					{token ? <CompanyList /> : <Redirect to="/" />}
 				</Route>
 				<Route exact path="/jobs/:job">
 					<h1 className={classes.space}>Job Blah Blah</h1>
 				</Route>
 				<Route exact path="/jobs">
 					<h1 className={classes.space}>Jobs</h1>
-					<JobList />
+					{token ? <JobList /> : <Redirect to="/" />}
 				</Route>
 				<Route exact path="/">
 					<h1 className={classes.center}>Welcome to Jobly Home Page</h1>
 					<h4>Keep Searching and You Find it</h4>
-					{token ? <UserPage /> : <MainPage />}
+					{token ? <UserPage /> : <Redirect to="/" />}
 				</Route>
 			</Switch>
 		</>

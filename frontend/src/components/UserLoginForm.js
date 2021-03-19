@@ -15,7 +15,7 @@ const UserLoginForm = () => {
 		password: "",
 	};
 	const history = useHistory();
-	const { token, setToken } = useContext(UserContext);
+	const { token, setToken, currUser, setCurrUser } = useContext(UserContext);
 	const [formData, setFormData] = useState(INITIAL_STATE);
 	const [error, setError] = useState(null);
 
@@ -28,15 +28,18 @@ const UserLoginForm = () => {
 	};
 
 	async function fetchData() {
-		const data = await JoblyApi.getAuthorization(formData, "token");
-		// console.log(data.token);
-		if (data.token) {
-			setToken(data.token);
+		let token;
+		try {
+			token = await JoblyApi.getAuthorization(formData, "token");
+			// console.log(data.token);
+			setToken(token);
+			setCurrUser(formData.username);
 			setError((state) => "You Logged In... Congrats!!!");
 			setFormData(INITIAL_STATE);
 			history.push("/");
-		} else {
-			setError((state) => "Wrong Credentials...Try again...");
+		} catch (err) {
+			console.log(err[0]);
+			setError(err[0]);
 		}
 	}
 
@@ -46,7 +49,7 @@ const UserLoginForm = () => {
 	};
 
 	useEffect(() => {
-		if (formData.password && formData.username) fetchData();
+		formData.password && formData.username && fetchData();
 	}, []);
 
 	return (
@@ -55,7 +58,7 @@ const UserLoginForm = () => {
 				<Row className="justify-content-md-center">
 					<Col sm={5}>
 						<Jumbotron>
-							<small className="m-2">{error}</small>
+							<small className="m-2 text-danger">{error}</small>
 							<Form onSubmit={handleSubmit}>
 								<Form.Group controlId="loginUserName">
 									<Form.Control
