@@ -42,52 +42,67 @@ const CompanyList = () => {
 
 	return (
 		<div>
-			<Container>
+			<Container fluid>
 				<Jumbotron>
-					<Form onSubmit={handleSubmit}>
-						<Form.Row className="align-items-center">
-							<Col>
-								<Form.Control
-									className="mb-2"
-									type="text"
-									name="name"
-									placeholder="Search by Company Name"
-									onChange={handleChange}
-									value={formData.name}
-								/>
-							</Col>
-							<Col xs="auto">
-								<Form.Control
-									className="mb-2"
-									type="number"
-									id="minEmployees"
-									name="minEmployees"
-									placeholder="Min Employees"
-									onChange={handleChange}
-									value={formData.minEmployees}
-								/>
-							</Col>
-							<Col xs="auto">
-								<Form.Control
-									className="mb-2"
-									type="number"
-									id="maxEmployees"
-									name="maxEmployees"
-									placeholder="Max Employees"
-									onChange={handleChange}
-									value={formData.maxEmployees}
-								/>
-							</Col>
-							<Col>
-								<Button variant="primary" type="submit">
-									Search
-								</Button>
-							</Col>
-						</Form.Row>
-					</Form>
-					<Row className="justify-content center text-center">
+					<Row>
+						{/* <Col sm="1" xs="12">
+							<Form.Label column>Search for Companies</Form.Label>
+						</Col> */}
+						<Col className="d-flex justify-content-center m-3">
+							<Form onSubmit={handleSubmit} className="mb-2">
+								<Form.Row className="align-items-center">
+									<Col lg="3" xs="12">
+										<Form.Label column>Search for Companies</Form.Label>
+									</Col>
+									<Col lg="3" xs="12" mb>
+										<Form.Control
+											className="my-2"
+											type="text"
+											name="name"
+											placeholder="Company Name"
+											onChange={handleChange}
+											value={formData.name}
+										/>
+									</Col>
+									<Col lg="2" md="3" xs="12">
+										<Form.Control
+											className="my-2"
+											type="number"
+											id="minEmployees"
+											name="minEmployees"
+											min="0"
+											placeholder="Min Employees"
+											onChange={handleChange}
+											value={formData.minEmployees}
+										/>
+									</Col>
+									<Col lg="2" md="3" xs="12">
+										<Form.Control
+											className="my-2"
+											type="number"
+											id="maxEmployees"
+											name="maxEmployees"
+											min="0"
+											placeholder="Max Employees"
+											onChange={handleChange}
+											value={formData.maxEmployees}
+										/>
+									</Col>
+									<Col md="2" xs="12">
+										<Button variant="primary" type="submit">
+											Search
+										</Button>
+									</Col>
+								</Form.Row>
+							</Form>
+						</Col>
+					</Row>
+					<Row>
 						{companies.map((company) => (
-							<Col className="m-3" key={company.handle}>
+							<Col
+								className="d-flex justify-content-center m-3"
+								key={company.handle}
+							>
 								<Company
 									id={company.handle}
 									name={company.name}

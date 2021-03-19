@@ -6,8 +6,9 @@ const Job = (props) => {
 			<Card style={{ width: "18rem" }} id={props.id}>
 				<Card.Body>
 					<Card.Title>{props.title}</Card.Title>
+					<hr />
 					<Card.Subtitle className="mb-2 text-muted">
-						Salary: {props.salary}
+						Salary: {props.salary ? props.salary : "Not specified"}
 					</Card.Subtitle>
 					<Card.Text>{props.companyName}</Card.Text>
 					{props.equity ? (

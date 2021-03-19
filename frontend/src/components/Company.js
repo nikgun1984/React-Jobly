@@ -5,12 +5,12 @@ const Company = (props) => {
 		<>
 			<Card style={{ width: "18rem" }} id={props.id}>
 				<Card.Body>
-					<Card.Title>Company: {props.name}</Card.Title>
+					<Card.Title>{props.name}</Card.Title>
+					<hr />
 					<Card.Subtitle className="mb-2 text-muted">
 						Number of employees: {props.numEmployees}
 					</Card.Subtitle>
 					<Card.Text>{props.description}</Card.Text>
-					{/* <Card.Link href="#">{props.logoURL}</Card.Link> */}
 					<Card.Link href="#">{`https://${props.id}.com`}</Card.Link>
 				</Card.Body>
 			</Card>

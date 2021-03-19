@@ -19,7 +19,15 @@ class JoblyApi {
 
 		const url = `${BASE_URL}/${endpoint}`;
 		const headers = { Authorization: `Bearer ${JoblyApi.token}` };
-		const params = method === "get" ? data : {};
+		let params; // = method === "get" ? data : {};
+		switch (method) {
+			case "get":
+			case "post":
+				params = data;
+				break;
+			default:
+				params = {};
+		}
 
 		try {
 			return (await axios({ url, method, data, params, headers })).data;
@@ -50,6 +58,13 @@ class JoblyApi {
 		}
 		let res = await this.request(url, paramData);
 		return res[url];
+	}
+
+	/* Authorize a user to be able to see other features -- login/register */
+
+	static async getAuthorization(formData, url) {
+		let res = await this.request(`auth/${url}`, formData, "post");
+		return res;
 	}
 }
 

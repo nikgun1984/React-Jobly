@@ -4,11 +4,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import MainPage from "./components/MainPage";
 import CompanyList from "./components/CompanyList";
 import JobList from "./components/JobList";
+import UserPage from "./components/UserPage";
 import { Route, Switch } from "react-router-dom";
+import UserContext from "./UserContext";
+import { useContext } from "react";
 
 const useStyles = makeStyles((theme) => ({
 	space: {
-		marginTop: "4rem",
+		marginTop: "8rem",
+		marginBottom: "4rem",
 	},
 	center: {
 		marginTop: "30vh",
@@ -19,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Routes = () => {
 	const classes = useStyles();
+	const { token } = useContext(UserContext);
 	return (
 		<>
 			<Switch>
@@ -50,7 +55,7 @@ const Routes = () => {
 				<Route exact path="/">
 					<h1 className={classes.center}>Welcome to Jobly Home Page</h1>
 					<h4>Keep Searching and You Find it</h4>
-					<MainPage />
+					{token ? <UserPage /> : <MainPage />}
 				</Route>
 			</Switch>
 		</>
@@ -58,12 +63,3 @@ const Routes = () => {
 };
 
 export default Routes;
-
-/*
-
-/companies
-List all companies
-/companies/apple
-View details of this company
-
-*/

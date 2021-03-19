@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Job from "./Job";
 import JoblyApi from "../api";
 
@@ -16,6 +16,7 @@ const JobList = () => {
 	};
 	const [jobs, setJobs] = useState([]);
 	const [formData, setFormData] = useState(INITIAL_STATE);
+	const checkBox = useRef();
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
@@ -42,6 +43,7 @@ const JobList = () => {
 		e.preventDefault();
 		fetchData();
 		setFormData(INITIAL_STATE);
+		checkBox.current.checked = false;
 	};
 
 	useEffect(() => {
@@ -79,6 +81,7 @@ const JobList = () => {
 							<Col xs="auto">
 								<Form.Check
 									className="mb-2"
+									ref={checkBox}
 									type="checkbox"
 									id="hasEquity"
 									name="hasEquity"
@@ -94,9 +97,9 @@ const JobList = () => {
 							</Col>
 						</Form.Row>
 					</Form>
-					<Row className="justify-content center text-center">
+					<Row>
 						{jobs.map((job) => (
-							<Col className="m-3" key={job.id}>
+							<Col className="d-flex justify-content-center m-3" key={job.id}>
 								<Job
 									id={job.id}
 									title={job.title}
