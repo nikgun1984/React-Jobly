@@ -19,6 +19,7 @@ class JoblyApi {
 
 		const url = `${BASE_URL}/${endpoint}`;
 		const headers = { Authorization: `Bearer ${JoblyApi.token}` };
+		console.log(headers);
 		let params; // = method === "get" ? data : {};
 		switch (method) {
 			case "get":
@@ -63,6 +64,7 @@ class JoblyApi {
 
 	static async getAuthorization(formData, url) {
 		let res = await this.request(`auth/${url}`, formData, "post");
+		console.log(res);
 		JoblyApi.token = res.token;
 		return res.token;
 	}
@@ -73,8 +75,9 @@ class JoblyApi {
 		return res;
 	}
 
-	static async editUserInfo(formData, username) {
-		let res = await this.request(`users/${username}`, formData, "patch");
+	static async editUserInfo(formData, userName, token) {
+		JoblyApi.token = token;
+		let res = await this.request(`users/${userName}`, formData, "patch");
 		return res;
 	}
 }

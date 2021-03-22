@@ -28,6 +28,7 @@ const UserRegisterForm = () => {
 		setCurrUserInfo,
 	} = useContext(UserContext);
 	const [formData, setFormData] = useState(INITIAL_STATE);
+	const [message, setMessage] = useState("");
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
@@ -38,18 +39,25 @@ const UserRegisterForm = () => {
 	};
 
 	async function fetchData() {
-		const data = await JoblyApi.getAuthorization(formData, "register");
-		if (data.token) {
-			setToken(data.token);
+		let token;
+		try {
+			token = await JoblyApi.getAuthorization(formData, "register");
+			setToken(token);
 			setCurrUser(formData.username);
-			setCurrUserInfo((prevState) => ({
-				user: {
-					...formData,
-				},
-			}));
 			setFormData(INITIAL_STATE);
 			history.push("/");
+		} catch (err) {
+			console.log(err[0]);
+			setMessage(err[0]);
 		}
+		// let data;
+		// try {
+		// 	data = await JoblyApi.getAuthorization(formData, "register");
+		// 	setToken(data);
+		// } catch (err) {
+		// 	console.log(err[0]);
+		// 	setMessage(err[0]);
+		// }
 	}
 
 	const handleSubmit = (e) => {
@@ -71,6 +79,7 @@ const UserRegisterForm = () => {
 				<Row className="justify-content-md-center">
 					<Col sm={5}>
 						<Jumbotron>
+							<small className="text-danger">{message}</small>
 							<Form onSubmit={handleSubmit}>
 								<Form.Group controlId="registerUserName">
 									<Form.Control
