@@ -4,13 +4,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { NavLink } from "react-router-dom";
-import useLocalStorageState from "../hooks/useLocalStorageState";
 import { useContext } from "react";
 import UserContext from "../UserContext";
 
 const useStyles = makeStyles(() => ({
 	link: {
-		marginRight: "10px",
+		marginRight: "20px",
 		color: "white",
 		fontSize: "1rem",
 		textDecoration: "none",
@@ -39,8 +38,12 @@ const useStyles = makeStyles(() => ({
 
 export default function NavBar() {
 	const classes = useStyles();
-	const { token, setToken } = useContext(UserContext);
-
+	const { token, setToken, setCurrUser } = useContext(UserContext);
+	const handleSignOut = () => {
+		setToken("");
+		// setCurrUserInfo(props.userInfo);
+		setCurrUser("");
+	};
 	return (
 		<div className={classes.root}>
 			<AppBar position="fixed">
@@ -70,15 +73,43 @@ export default function NavBar() {
 							</NavLink>
 						</>
 					) : (
-						<NavLink
-							exact
-							to="/"
-							activeClassName={classes.active}
-							className={classes.link}
-							onClick={() => setToken("")}
-						>
-							Sign Out
-						</NavLink>
+						<>
+							<NavLink
+								exact
+								to="/companies"
+								activeClassName={classes.active}
+								className={classes.link}
+							>
+								Companies
+							</NavLink>
+							<NavLink
+								exact
+								to="/jobs"
+								activeClassName={classes.active}
+								className={classes.link}
+							>
+								Jobs
+							</NavLink>
+							<NavLink
+								exact
+								to="/profile"
+								activeClassName={classes.active}
+								className={classes.link}
+							>
+								<h4>
+									<i className="fas fa-user-tie"></i>
+								</h4>
+							</NavLink>
+							<NavLink
+								exact
+								to="/"
+								activeClassName={classes.active}
+								className={classes.link}
+								onClick={handleSignOut}
+							>
+								Sign Out
+							</NavLink>
+						</>
 					)}
 				</Toolbar>
 			</AppBar>

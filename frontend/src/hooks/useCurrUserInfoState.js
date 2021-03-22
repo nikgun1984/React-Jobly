@@ -1,28 +1,18 @@
 import { useState, useEffect } from "react";
 import JoblyApi from "../api";
 
-const useCurrUserInfoState = (username) => {
-	const INITIAL_VALUES = {
-		user: {
-			username: username,
-			password: "",
-			firstName: "",
-			lastName: "",
-			email: "",
-		},
-	};
-	const [currUser, setCurrUser] = useState(INITIAL_VALUES);
+const useCurrUserInfoState = (username, token) => {
+	const [state, setState] = useState({});
 
 	useEffect(() => {
-		async function getUserInfo() {
-			const userInfo = await JoblyApi.getUserInfo(username);
-			console.log(userInfo);
-			setCurrUser((user) => {});
-		}
-		if (username) getUserInfo();
-	}, [currUser]);
+		username &&
+			token &&
+			JoblyApi.getUserInfo(username, token).then((response) => {
+				setState(response.user);
+			});
+	}, [username, token]);
 
-	return [currUser, setCurrUser];
+	return [state, setState];
 };
 
 export default useCurrUserInfoState;

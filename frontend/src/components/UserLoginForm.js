@@ -15,7 +15,7 @@ const UserLoginForm = () => {
 		password: "",
 	};
 	const history = useHistory();
-	const { token, setToken, currUser, setCurrUser } = useContext(UserContext);
+	const { setToken, setCurrUser } = useContext(UserContext);
 	const [formData, setFormData] = useState(INITIAL_STATE);
 	const [error, setError] = useState(null);
 
@@ -31,7 +31,6 @@ const UserLoginForm = () => {
 		let token;
 		try {
 			token = await JoblyApi.getAuthorization(formData, "token");
-			// console.log(data.token);
 			setToken(token);
 			setCurrUser(formData.username);
 			setError((state) => "You Logged In... Congrats!!!");

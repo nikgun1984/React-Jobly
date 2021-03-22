@@ -2,6 +2,7 @@ import UserLoginForm from "./components/UserLoginForm";
 import UserRegisterForm from "./components/UserRegisterForm";
 import { makeStyles } from "@material-ui/core/styles";
 import MainPage from "./components/MainPage";
+import UserInfo from "./components/UserInfo";
 import CompanyList from "./components/CompanyList";
 import JobList from "./components/JobList";
 import UserPage from "./components/UserPage";
@@ -36,7 +37,8 @@ const Routes = () => {
 					<UserRegisterForm />
 				</Route>
 				<Route exact path="/profile">
-					<h1 className={classes.space}>User Profile</h1>
+					<div className={classes.space}></div>
+					<UserInfo className={classes.space} />
 				</Route>
 				<Route exact path="/companies/:company">
 					<h1 className={classes.space}>Company Blah Blah</h1>
@@ -55,7 +57,7 @@ const Routes = () => {
 				<Route exact path="/">
 					<h1 className={classes.center}>Welcome to Jobly Home Page</h1>
 					<h4>Keep Searching and You Find it</h4>
-					{token ? <UserPage /> : <Redirect to="/" />}
+					{token ? <UserPage /> : <MainPage />}
 				</Route>
 			</Switch>
 		</>

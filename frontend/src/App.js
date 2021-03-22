@@ -9,7 +9,7 @@ import useCurrUserInfoState from "./hooks/useCurrUserInfoState";
 function App() {
 	const [token, setToken] = useLocalStorageState("token", "");
 	const [currUser, setCurrUser] = useLocalStorageState("username", "");
-	const [currUserInfo, setCurrUserInfo] = useCurrUserInfoState(currUser);
+	const [currUserInfo, setCurrUserInfo] = useCurrUserInfoState(currUser, token);
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -32,3 +32,5 @@ function App() {
 }
 
 export default App;
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pY2suZ3JlZW4iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjE2MzYwNjE3fQ.RkgF7hXDKX63MNZMPmGxHFdK_L42IOfK_j5hI2Hdq6w
