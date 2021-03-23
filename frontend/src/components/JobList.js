@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Job from "./Job";
 import JoblyApi from "../api";
+import UserContext from "../UserContext";
+import {useContext} from "react";
 
 const JobList = () => {
 	const INITIAL_STATE = {
@@ -15,6 +17,8 @@ const JobList = () => {
 	};
 	const [jobs, setJobs] = useState([]);
 	const [formData, setFormData] = useState(INITIAL_STATE);
+    const { currUserInfo } = useContext(UserContext);
+
 	const checkBox = useRef();
 
 	const handleChange = (evt) => {
@@ -99,6 +103,8 @@ const JobList = () => {
 									salary={job.salary}
 									equity={job.equity}
 									companyName={job.companyName}
+									jobid={job.id}
+									applied={currUserInfo.applications.includes(job.id)?true:false}
 								/>
 							</Col>
 						))}

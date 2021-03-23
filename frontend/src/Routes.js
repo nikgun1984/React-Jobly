@@ -59,7 +59,7 @@ const Routes = () => {
 				</Route>
 				<Route exact path="/">
 					<h1 className={classes.center}>Welcome to Jobly Home Page</h1>
-					<h4>Keep Searching and You Find it</h4>
+					<h4>Keep Searching and Find What You Are Looking For</h4>
 					{token ? <UserPage /> : <MainPage />}
 				</Route>
 			</Switch>

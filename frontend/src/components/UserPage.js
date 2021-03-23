@@ -1,7 +1,11 @@
+import UserContext from "../UserContext";
+import { useContext } from "react";
+
 const UserPage = () => {
+	const { currUserInfo } = useContext(UserContext);
 	return (
 		<>
-			<h4>Hey User... Ready to get a job?</h4>
+			<h4>Hello, {currUserInfo.firstName}... Ready to get a job?</h4>
 		</>
 	);
 };
