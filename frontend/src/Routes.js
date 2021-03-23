@@ -6,6 +6,8 @@ import UserInfo from "./components/UserInfo";
 import CompanyList from "./components/CompanyList";
 import JobList from "./components/JobList";
 import UserPage from "./components/UserPage";
+import CompanyInfo from "./components/CompanyInfo";
+import JobInfo from "./components/JobInfo";
 import { Route, Switch, Redirect } from "react-router-dom";
 import UserContext from "./UserContext";
 import { useContext } from "react";
@@ -40,15 +42,16 @@ const Routes = () => {
 					<div className={classes.space}></div>
 					<UserInfo className={classes.space} />
 				</Route>
-				<Route exact path="/companies/:company">
-					<h1 className={classes.space}>Company Blah Blah</h1>
+				<Route exact path="/companies/:handle">
+					<CompanyInfo />
 				</Route>
 				<Route exact path="/companies">
 					<h1 className={classes.space}>Companies</h1>
 					{token ? <CompanyList /> : <Redirect to="/" />}
 				</Route>
-				<Route exact path="/jobs/:job">
-					<h1 className={classes.space}>Job Blah Blah</h1>
+				<Route exact path="/jobs/:id">
+					<h1 className={classes.space}>Job Description</h1>
+					<JobInfo />
 				</Route>
 				<Route exact path="/jobs">
 					<h1 className={classes.space}>Jobs</h1>

@@ -3,15 +3,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Job from "./Job";
 import JoblyApi from "../api";
 
 const JobList = () => {
 	const INITIAL_STATE = {
 		title: "",
-		minSalary: "",
+		minSalary: 0,
 		hasEquity: false,
 	};
 	const [jobs, setJobs] = useState([]);
@@ -34,69 +33,63 @@ const JobList = () => {
 		}));
 	};
 
-	async function fetchData() {
-		const jobs = await JoblyApi.getComponents(formData, "jobs");
-		setJobs(jobs);
-	}
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		fetchData();
-		setFormData(INITIAL_STATE);
-		checkBox.current.checked = false;
-	};
+	const fetchData = useCallback(() => {
+		JoblyApi.getComponents(formData, "jobs").then((res) => setJobs(res));
+	}, [formData]);
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [fetchData]);
 
 	return (
 		<div>
 			<Container>
 				<Jumbotron>
-					<Form onSubmit={handleSubmit}>
-						<Form.Row className="align-items-center">
-							<Col>
-								<Form.Control
-									className="mb-2"
-									type="text"
-									name="title"
-									placeholder="Search by Title of a Job"
-									onChange={handleChange}
-									value={formData.title}
-								/>
-							</Col>
-							<Col xs="auto">
-								<Form.Control
-									className="mb-2"
-									type="number"
-									id="minSalary"
-									name="minSalary"
-									placeholder="Min Salary"
-									min="0"
-									onChange={handleChange}
-									value={formData.minEmployees}
-								/>
-							</Col>
-							<Col xs="auto">
-								<Form.Check
-									className="mb-2"
-									ref={checkBox}
-									type="checkbox"
-									id="hasEquity"
-									name="hasEquity"
-									label={`Equity?`}
-									onChange={handleClick}
-									value={formData.hasEquity}
-								/>
-							</Col>
-							<Col>
-								<Button variant="primary" type="submit">
-									Search
-								</Button>
-							</Col>
-						</Form.Row>
-					</Form>
+					<Row>
+						<Col className="d-flex justify-content-center m-3">
+							<Form>
+								<Form.Row className="align-items-center">
+									<Col lg="3" xs="12">
+										<Form.Label column>Search for Jobs</Form.Label>
+									</Col>
+									<Col lg="4" xs="12">
+										<Form.Control
+											className="mb-2"
+											type="text"
+											name="title"
+											placeholder="Search by Title of a Job"
+											onChange={handleChange}
+											value={formData.title}
+										/>
+									</Col>
+									<Col lg="3" xs="12">
+										<Form.Control
+											className="mb-2"
+											type="number"
+											id="minSalary"
+											name="minSalary"
+											placeholder="Min Salary"
+											min="0"
+											onChange={handleChange}
+											value={formData.minEmployees}
+										/>
+									</Col>
+									<Col lg="2" xs="12">
+										<Form.Check
+											className="mb-2"
+											ref={checkBox}
+											type="checkbox"
+											id="hasEquity"
+											name="hasEquity"
+											label={`Equity?`}
+											onChange={handleClick}
+											value={formData.hasEquity}
+										/>
+									</Col>
+								</Form.Row>
+							</Form>
+						</Col>
+					</Row>
 					<Row>
 						{jobs.map((job) => (
 							<Col className="d-flex justify-content-center m-3" key={job.id}>

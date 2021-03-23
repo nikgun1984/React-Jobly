@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Jumbotron from "react-bootstrap/Jumbotron";
@@ -60,15 +60,6 @@ const UserInfo = () => {
 			setMessage(err[0]);
 		}
 	}
-
-	useEffect(() => {
-		formData.password &&
-			formData.password === formData.repassword &&
-			formData.firstName &&
-			formData.lastName &&
-			formData.email &&
-			fetchData();
-	}, []);
 
 	return (
 		<>

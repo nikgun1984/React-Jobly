@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../UserContext";
 import JoblyApi from "../api";
@@ -19,14 +19,7 @@ const UserRegisterForm = () => {
 		email: "",
 	};
 	const history = useHistory();
-	const {
-		token,
-		setToken,
-		currUser,
-		setCurrUser,
-		currUserInfo,
-		setCurrUserInfo,
-	} = useContext(UserContext);
+	const { setToken, setCurrUser } = useContext(UserContext);
 	const [formData, setFormData] = useState(INITIAL_STATE);
 	const [message, setMessage] = useState("");
 
@@ -47,17 +40,8 @@ const UserRegisterForm = () => {
 			setFormData(INITIAL_STATE);
 			history.push("/");
 		} catch (err) {
-			console.log(err[0]);
 			setMessage(err[0]);
 		}
-		// let data;
-		// try {
-		// 	data = await JoblyApi.getAuthorization(formData, "register");
-		// 	setToken(data);
-		// } catch (err) {
-		// 	console.log(err[0]);
-		// 	setMessage(err[0]);
-		// }
 	}
 
 	const handleSubmit = (e) => {
@@ -65,14 +49,6 @@ const UserRegisterForm = () => {
 		fetchData();
 	};
 
-	useEffect(() => {
-		formData.username &&
-			formData.password &&
-			formData.firstName &&
-			formData.lastName &&
-			formData.email &&
-			fetchData();
-	}, []);
 	return (
 		<>
 			<Container>

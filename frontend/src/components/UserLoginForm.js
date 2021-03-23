@@ -4,7 +4,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../UserContext";
 import JoblyApi from "../api";
@@ -46,10 +46,6 @@ const UserLoginForm = () => {
 		e.preventDefault();
 		fetchData();
 	};
-
-	useEffect(() => {
-		formData.password && formData.username && fetchData();
-	}, []);
 
 	return (
 		<>

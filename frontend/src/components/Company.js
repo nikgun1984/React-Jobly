@@ -11,7 +11,7 @@ const Company = (props) => {
 						Number of employees: {props.numEmployees}
 					</Card.Subtitle>
 					<Card.Text>{props.description}</Card.Text>
-					<Card.Link href="#">{`https://${props.id}.com`}</Card.Link>
+					<Card.Link href={`/companies/${props.id}`}>More info...</Card.Link>
 				</Card.Body>
 			</Card>
 		</>

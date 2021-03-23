@@ -19,11 +19,12 @@ class JoblyApi {
 
 		const url = `${BASE_URL}/${endpoint}`;
 		const headers = { Authorization: `Bearer ${JoblyApi.token}` };
-		console.log(headers);
-		let params; // = method === "get" ? data : {};
+		let params;
 		switch (method) {
 			case "get":
 			case "post":
+			case "patch":
+			case "delete":
 				params = data;
 				break;
 			default:
@@ -44,7 +45,14 @@ class JoblyApi {
 
 	static async getCompany(handle) {
 		let res = await this.request(`companies/${handle}`);
-		return res.companies;
+		return res.company;
+	}
+
+	/** Get details on a job by id. */
+
+	static async getJob(id) {
+		let res = await this.request(`jobs/${id}`);
+		return res.job;
 	}
 
 	/* Get Details of Companies or Jobs( with filters or without )*/
@@ -64,16 +72,19 @@ class JoblyApi {
 
 	static async getAuthorization(formData, url) {
 		let res = await this.request(`auth/${url}`, formData, "post");
-		console.log(res);
 		JoblyApi.token = res.token;
 		return res.token;
 	}
+
+	/* Get information on a particular user */
 
 	static async getUserInfo(username, token) {
 		JoblyApi.token = token;
 		let res = await this.request(`users/${username}`);
 		return res;
 	}
+
+	/* Edit user using formData */
 
 	static async editUserInfo(formData, userName, token) {
 		JoblyApi.token = token;

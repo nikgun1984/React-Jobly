@@ -18,6 +18,7 @@ const Job = (props) => {
 					) : (
 						""
 					)}
+					<Card.Link href={`/jobs/${props.id}`}>More info...</Card.Link>
 				</Card.Body>
 			</Card>
 		</>

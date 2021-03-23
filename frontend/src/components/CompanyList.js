@@ -3,8 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Company from "./Company";
 import JoblyApi from "../api";
 
@@ -25,36 +24,28 @@ const CompanyList = () => {
 		}));
 	};
 
-	async function fetchData() {
-		const companies = await JoblyApi.getComponents(formData, "companies");
-		setCompanies(companies);
-	}
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		fetchData();
-		setFormData(INITIAL_STATE);
-	};
+	const fetchData = useCallback(() => {
+		JoblyApi.getComponents(formData, "companies").then((res) =>
+			setCompanies(res)
+		);
+	}, [formData]);
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [fetchData]);
 
 	return (
 		<div>
-			<Container fluid>
+			<Container>
 				<Jumbotron>
 					<Row>
-						{/* <Col sm="1" xs="12">
-							<Form.Label column>Search for Companies</Form.Label>
-						</Col> */}
 						<Col className="d-flex justify-content-center m-3">
-							<Form onSubmit={handleSubmit} className="mb-2">
+							<Form className="mb-2">
 								<Form.Row className="align-items-center">
 									<Col lg="3" xs="12">
 										<Form.Label column>Search for Companies</Form.Label>
 									</Col>
-									<Col lg="3" xs="12" mb>
+									<Col lg="3" xs="12">
 										<Form.Control
 											className="my-2"
 											type="text"
@@ -64,7 +55,7 @@ const CompanyList = () => {
 											value={formData.name}
 										/>
 									</Col>
-									<Col lg="2" md="3" xs="12">
+									<Col lg="3" md="4" xs="12">
 										<Form.Control
 											className="my-2"
 											type="number"
@@ -76,7 +67,7 @@ const CompanyList = () => {
 											value={formData.minEmployees}
 										/>
 									</Col>
-									<Col lg="2" md="3" xs="12">
+									<Col lg="3" md="4" xs="12">
 										<Form.Control
 											className="my-2"
 											type="number"
@@ -87,11 +78,6 @@ const CompanyList = () => {
 											onChange={handleChange}
 											value={formData.maxEmployees}
 										/>
-									</Col>
-									<Col md="2" xs="12">
-										<Button variant="primary" type="submit">
-											Search
-										</Button>
 									</Col>
 								</Form.Row>
 							</Form>
@@ -109,6 +95,7 @@ const CompanyList = () => {
 									description={company.description}
 									numEmployees={company.numEmployees}
 									logoURL={company.logoUrl}
+									handle={company.handle}
 								/>
 							</Col>
 						))}
