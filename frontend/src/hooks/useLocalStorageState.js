@@ -1,3 +1,4 @@
+/* Save Simple Data to dataStorage */
 import { useState, useEffect } from "react";
 
 const useLocalStorageState = (key, defaultVal) => {

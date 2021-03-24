@@ -14,7 +14,6 @@ const JobInfo = () => {
 	useEffect(() => {
 		async function fetchCompanyInfo() {
 			const jobName = await JoblyApi.getJob(id);
-			console.log(jobName);
 			setJob({ ...jobName });
 		}
 		fetchCompanyInfo();

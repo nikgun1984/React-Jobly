@@ -1,6 +1,10 @@
+/* Routes Component */
+
 import UserLoginForm from "./components/UserLoginForm";
 import UserRegisterForm from "./components/UserRegisterForm";
 import { makeStyles } from "@material-ui/core/styles";
+import { Route, Switch, Redirect } from "react-router-dom";
+
 import MainPage from "./components/MainPage";
 import UserInfo from "./components/UserInfo";
 import CompanyList from "./components/CompanyList";
@@ -8,7 +12,6 @@ import JobList from "./components/JobList";
 import UserPage from "./components/UserPage";
 import CompanyInfo from "./components/CompanyInfo";
 import JobInfo from "./components/JobInfo";
-import { Route, Switch, Redirect } from "react-router-dom";
 import UserContext from "./UserContext";
 import { useContext } from "react";
 

@@ -1,3 +1,4 @@
+/* Save complex objects to dataStorage */
 import { useState, useEffect } from "react";
 
 const useObject = (key, defaultVal) => {

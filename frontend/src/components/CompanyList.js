@@ -8,6 +8,7 @@ import Company from "./Company";
 import JoblyApi from "../api";
 
 const CompanyList = () => {
+	/* Will sync all company list including Search Bar */
 	const INITIAL_STATE = {
 		name: "",
 		minEmployees: "",

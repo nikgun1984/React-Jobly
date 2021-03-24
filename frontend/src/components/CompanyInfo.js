@@ -2,13 +2,18 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import JoblyApi from "../api";
 import Job from "./Job";
+import useApplications from "../hooks/useApplications";
+import UserContext from "../UserContext";
 
 const CompanyInfo = () => {
+	/* Company Information including job it posted */
 	const { handle } = useParams();
+	const { token, currUser } = useContext(UserContext);
+	const [applications, setApplications] = useApplications(currUser, token);
 
 	const [company, setCompany] = useState(null);
 	useEffect(() => {
@@ -25,9 +30,9 @@ const CompanyInfo = () => {
 	}
 	return (
 		<>
-			<Container fluid>
+			<Container>
 				<Row className="justify-content-center">
-					<Col sm={8}>
+					<Col>
 						<Jumbotron className="mt-6">
 							<Row>
 								<Col className="text-center mt-4">
@@ -38,7 +43,10 @@ const CompanyInfo = () => {
 							<Row>
 								<Col className="text-center mt-4">
 									<h4 className="mb-2 text-muted">
-										Number of employees: {company.numEmployees}
+										Number of employees:{" "}
+										{company.numEmployees
+											? company.numEmployees
+											: "Unspecified"}
 									</h4>
 									<hr />
 								</Col>
@@ -57,6 +65,15 @@ const CompanyInfo = () => {
 											salary={job.salary}
 											equity={job.equity}
 											companyName={job.companyName}
+											addApp={setApplications}
+											applications={applications}
+											applied={
+												applications
+													? applications.includes(job.id)
+														? true
+														: false
+													: false
+											}
 										/>
 									</Col>
 								))}

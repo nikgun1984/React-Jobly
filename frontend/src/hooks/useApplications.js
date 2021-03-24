@@ -1,3 +1,4 @@
+/* Fetching applications from API */
 import { useEffect } from "react";
 import JoblyApi from "../api";
 import useObject from "./useObject";
@@ -10,7 +11,6 @@ const useApplications = (username, token) => {
 			token &&
 			JoblyApi.getUserInfo(username, token).then((response) => {
 				setApps(() => response.user.applications);
-				console.log(response);
 			});
 	}, []);
 

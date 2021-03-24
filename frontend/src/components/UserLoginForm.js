@@ -37,7 +37,6 @@ const UserLoginForm = () => {
 			setFormData(INITIAL_STATE);
 			history.push("/");
 		} catch (err) {
-			console.log(err[0]);
 			setError(err[0]);
 		}
 	}

@@ -1,3 +1,4 @@
+/* Fetching and refreshing current user's data*/
 import { useEffect, useRef } from "react";
 import JoblyApi from "../api";
 import useObject from "./useObject";

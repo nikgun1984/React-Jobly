@@ -17,13 +17,13 @@ const Job = ({
 	applied,
 	applications,
 }) => {
+	/* A single job component including all info and job application */
 	const { token, currUser } = useContext(UserContext);
 	const btn = useRef();
 
 	async function fetchData(token) {
 		try {
 			await JoblyApi.applyForJob(currUser, id, token);
-			console.log("IN HERE");
 		} catch (err) {
 			console.log(err[0]);
 		}

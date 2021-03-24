@@ -1,6 +1,7 @@
 import Card from "react-bootstrap/Card";
 
 const Company = (props) => {
+	/* Company Component to display one card with full description of the job*/
 	return (
 		<>
 			<Card style={{ width: "18rem" }} id={props.id}>
