@@ -7,7 +7,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Job from "./Job";
 import JoblyApi from "../api";
 import UserContext from "../UserContext";
-import {useContext} from "react";
+import { useContext } from "react";
+import useApplications from "../hooks/useApplications";
 
 const JobList = () => {
 	const INITIAL_STATE = {
@@ -17,8 +18,8 @@ const JobList = () => {
 	};
 	const [jobs, setJobs] = useState([]);
 	const [formData, setFormData] = useState(INITIAL_STATE);
-    const { currUserInfo } = useContext(UserContext);
-
+	const { token, currUser } = useContext(UserContext);
+	const [applications, setApplications] = useApplications(currUser, token);
 	const checkBox = useRef();
 
 	const handleChange = (evt) => {
@@ -103,8 +104,15 @@ const JobList = () => {
 									salary={job.salary}
 									equity={job.equity}
 									companyName={job.companyName}
-									jobid={job.id}
-									applied={currUserInfo.applications.includes(job.id)?true:false}
+									addApp={setApplications}
+									applications={applications}
+									applied={
+										applications
+											? applications.includes(job.id)
+												? true
+												: false
+											: false
+									}
 								/>
 							</Col>
 						))}

@@ -11,9 +11,7 @@ function App() {
 	const [currUser, setCurrUser] = useLocalStorageState("username", "");
 	const [currUserInfo, setCurrUserInfo] = useCurrUserInfoState(currUser, token);
 	return (
-		<div
-			className="App"
-		>
+		<div className="App">
 			<BrowserRouter>
 				<UserContext.Provider
 					value={{

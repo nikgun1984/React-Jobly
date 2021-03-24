@@ -3,45 +3,57 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Collapse";
 import Form from "react-bootstrap/Form";
-import JoblyApi from '../api';
+import JoblyApi from "../api";
 import UserContext from "../UserContext";
-import {useContext} from 'react';
+import { useContext, useRef } from "react";
 
-
-const Job = (props) => {
-    const { token, currUser } = useContext(UserContext);
+const Job = ({
+	id,
+	title,
+	salary,
+	equity,
+	companyName,
+	addApp,
+	applied,
+	applications,
+}) => {
+	const { token, currUser } = useContext(UserContext);
+	const btn = useRef();
 
 	async function fetchData(token) {
 		try {
-			await JoblyApi.applyForJob(currUser, props.id, token);
+			await JoblyApi.applyForJob(currUser, id, token);
+			console.log("IN HERE");
 		} catch (err) {
-			// setMessage(err[0]);
+			console.log(err[0]);
 		}
 	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		fetchData(token);
+		addApp([...applications, id]);
+		btn.current.disabled = true;
 	};
 
 	return (
 		<>
-			<Card style={{ width: "18rem" }} id={props.id}>
+			<Card style={{ width: "18rem" }} id={id}>
 				<Card.Body className="d-flex flex-column">
-					<Card.Title>{props.title}</Card.Title>
+					<Card.Title>{title}</Card.Title>
 					<hr />
 					<Card.Subtitle className="mb-2 text-muted">
-						Salary: {props.salary ? props.salary : "Not specified"}
+						Salary: {salary ? salary : "Not specified"}
 					</Card.Subtitle>
-					<Card.Text>{props.companyName}</Card.Text>
-					{props.equity ? (
+					<Card.Text>{companyName}</Card.Text>
+					{equity ? (
 						<Card.Text>
-							<b>Equity:</b> {props.equity}
+							<b>Equity:</b> {equity}
 						</Card.Text>
 					) : (
 						""
 					)}
-					<Card.Link href={`/jobs/${props.id}`} className="mb-5">
+					<Card.Link href={`/jobs/${id}`} className="mb-5">
 						More info...
 					</Card.Link>
 					<div>
@@ -49,12 +61,13 @@ const Job = (props) => {
 							<Col className="d-flex justify-content-center m-3">
 								<Form onSubmit={handleSubmit}>
 									<Button
+										ref={btn}
 										type="submit"
 										variant="primary"
 										className="align-self-end btn btn-lg mt-auto"
-										disabled={props.applied}
+										disabled={applied}
 									>
-										{props.applied?"Applied":"Apply"}
+										{applied ? "Applied" : "Apply"}
 									</Button>
 								</Form>
 							</Col>

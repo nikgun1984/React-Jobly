@@ -1,32 +1,28 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import JoblyApi from "../api";
+import useObject from "./useObject";
 
 const useCurrUserInfoState = (username, token) => {
-	const [state, setState] = useState({});
-	useEffect(() => {
-		async function setInfo() {
-			let res = await JoblyApi.getUserInfo(username, token);
-			setState((state) => ({
-				...state,
-				firstName: res.user.firstName,
-				lastName: res.user.lastName,
-				email: res.user.email,
-				applications: res.user.applications,
-			}));
-		}
-		if (username) {
-			setInfo();
-		}
-	}, [
-		username,
-		token,
-		state.firstName,
-		state.lastName,
-		state.email,
-		state.applications,
-	]);
+	const [userInfo, setUserInfo] = useObject("userInfo", {});
+	const isFirstRun = useRef(true);
 
-	return [state, setState];
+	useEffect(() => {
+		if (isFirstRun.current) {
+			isFirstRun.current = false; //i'm using useRef to not run this code on the first run
+			return;
+		}
+		username &&
+			token &&
+			JoblyApi.getUserInfo(username, token).then((response) => {
+				setUserInfo(() => ({
+					firstName: response.user.firstName,
+					lastName: response.user.lastName,
+					email: response.user.email,
+				}));
+			});
+	}, [username, token, setUserInfo]);
+
+	return [userInfo, setUserInfo];
 };
 
 export default useCurrUserInfoState;
