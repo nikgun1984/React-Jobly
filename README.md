@@ -3,7 +3,7 @@
 Currently in Development....  
 
 
-![Image description](sample.mov)
+![Image description](sample.gif)
 
 ## Parts:  
 -- Backend with Express.js.  
