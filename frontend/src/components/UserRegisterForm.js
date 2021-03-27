@@ -94,7 +94,7 @@ const UserRegisterForm = () => {
 										placeholder="Last Name"
 									/>
 								</Form.Group>
-								<Form.Group controlId="registerUserLastName">
+								<Form.Group controlId="registerUserEmail">
 									<Form.Control
 										type="email"
 										name="email"
