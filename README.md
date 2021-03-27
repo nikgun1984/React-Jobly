@@ -1,6 +1,7 @@
 # Fullstack Jobly Application
 
-Currently in Development....  
+<https://jobly-app.netlify.app/>   
+
 
 
 ![Image description](sample.gif)
